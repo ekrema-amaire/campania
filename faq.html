@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ | Campania die Pizza</title>
+  <meta name="description" content="Häufige Fragen zur Bestellung, Lieferung & Abholung.">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Scripts -->
+  <script defer src="assets/js/theme.js"></script>
+  <script defer src="assets/js/state.js"></script>
+  <script defer src="assets/js/ui.js"></script>
+  <script defer src="assets/js/cart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="logo">
+      <img src="assets/img/logo-light.svg" alt="Campania Logo hell" class="logo-img light">
+      <img src="assets/img/logo-dark.svg" alt="Campania Logo dunkel" class="logo-img dark">
+    </a>
+    <nav class="main-nav">
+      <a href="menue.html">Speisekarte</a>
+      <a href="oeffnungszeiten.html">Öffnungszeiten</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="header-actions">
+      <button id="themeToggle" class="btn ghost" type="button" aria-label="Theme umschalten">🌗</button>
+      <a href="konto.html" class="btn link">Konto</a>
+      <button id="openCart" class="btn cart" type="button" aria-haspopup="dialog" aria-controls="cartDrawer">
+        Warenkorb <span id="cartBadge" class="badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-content">
+      <header class="drawer-header">
+        <h2 id="cartTitle">Warenkorb</h2>
+        <button class="btn icon" id="closeCart" type="button" aria-label="Warenkorb schließen">✕</button>
+      </header>
+      <div id="cartItems" class="drawer-body" aria-live="polite"></div>
+      <div class="drawer-footer">
+        <div id="cartTotals"></div>
+        <div class="drawer-actions">
+          <a href="kasse.html" id="checkoutBtn" class="btn primary" aria-disabled="true">Zur Kasse</a>
+          <button class="btn ghost" id="continueShopping" type="button">Weiter einkaufen</button>
+        </div>
+        <div id="cartMessages" class="cart-messages" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main -->
+  <main class="form" style="max-width: 860px; margin: 0 auto; padding: 1rem;">
+    <h1>FAQ</h1>
+    <p class="muted">Häufige Fragen zur Bestellung, Lieferung & Abholung.</p>
+
+    <section class="card" style="padding:1rem; margin-bottom:1rem;">
+      <h2>Bestellung</h2>
+      <p><strong>Wie kann ich bestellen?</strong><br>
+      Direkt über unsere <a href="menue.html">Speisekarte</a> online. Warenkorb füllen → Kasse → Bestellung abschließen.</p>
+
+      <p><strong>Kann ich ohne Konto bestellen?</strong><br>
+      Ja, du kannst auch als Gast bestellen.</p>
+    </section>
+
+    <section class="card" style="padding:1rem; margin-bottom:1rem;">
+      <h2>Lieferung</h2>
+      <p><strong>In welche Gebiete liefern wir?</strong><br>
+      Wir liefern im Stadtgebiet Braunschweig. Details siehe bei der Adresseingabe an der Kasse.</p>
+
+      <p><strong>Wie lange dauert die Lieferung?</strong><br>
+      In der Regel ca. 30–45 Minuten, je nach Auslastung.</p>
+    </section>
+
+    <section class="card" style="padding:1rem;">
+      <h2>Zahlung</h2>
+      <p><strong>Welche Zahlungsmöglichkeiten gibt es?</strong><br>
+      Aktuell Bar oder mit Karte bei Lieferung/Abholung.</p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-col">
+      <h3>Campania die Pizza</h3>
+      <p>Hamburgstraße 260<br>38114 Braunschweig</p>
+      <p><a href="tel:+49531234567">+49 531 234567</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Schnellzugriff</h4>
+      <ul>
+        <li><a href="menue.html">Speisekarte</a></li>
+        <li><a href="oeffnungszeiten.html">Öffnungszeiten</a></li>
+        <li><a href="bewertungen.html">Bewertungen</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <ul>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

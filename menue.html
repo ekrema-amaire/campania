@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speisekarte – Pizza, Pasta & mehr | Campania die Pizza</title>
+  <meta name="description" content="Entdecke unsere Pizzen (Bianca, Rossa, Specials), Pasta & Dips. Mit Größenwahl, Extras & Calzone-Option.">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Scripts -->
+  <script defer src="assets/js/theme.js"></script>
+  <script defer src="assets/js/state.js"></script>
+  <script defer src="assets/js/ui.js"></script>
+  <script defer src="assets/js/cart.js"></script>
+  <script defer src="assets/js/menu.js"></script>
+  <script defer src="assets/js/home.js"></script><!-- für ProductModal Wiederverwendung -->
+  <script defer src="assets/js/auth.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="logo">
+      <img src="assets/img/logo-light.svg" alt="Campania Logo (hell)" class="logo-img light">
+      <img src="assets/img/logo-dark.svg" alt="Campania Logo (dunkel)" class="logo-img dark">
+    </a>
+    <nav class="main-nav">
+      <a href="menue.html" aria-current="page">Speisekarte</a>
+      <a href="oeffnungszeiten.html">Öffnungszeiten</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="header-actions">
+      <button id="themeToggle" class="btn ghost" type="button" aria-label="Theme umschalten">🌗</button>
+      <a href="konto.html" class="btn link">Konto</a>
+      <button id="openCart" class="btn cart" type="button" aria-haspopup="dialog" aria-controls="cartDrawer">
+        Warenkorb <span id="cartBadge" class="badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Cart Drawer (in den Body verschoben) -->
+  <div id="cartDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-content">
+      <header class="drawer-header">
+        <h2 id="cartTitle">Warenkorb</h2>
+        <button class="btn icon" id="closeCart" type="button" aria-label="Warenkorb schließen">✕</button>
+      </header>
+      <div id="cartItems" class="drawer-body" aria-live="polite"></div>
+      <div class="drawer-footer">
+        <div id="cartTotals"></div>
+        <div class="drawer-actions">
+          <a href="kasse.html" id="checkoutBtn" class="btn primary" aria-disabled="true">Zur Kasse</a>
+          <button class="btn ghost" id="continueShopping" type="button">Weiter einkaufen</button>
+        </div>
+        <div id="cartMessages" class="cart-messages" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast (in den Body verschoben) -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main -->
+  <main id="content">
+    <section class="tabs" role="tablist" aria-label="Kategorien">
+      <button role="tab" aria-selected="true" data-cat="Alle" type="button">Alle</button>
+      <button role="tab" data-cat="Pizza" type="button">Pizza</button>
+      <button role="tab" data-cat="Pasta" type="button">Pasta</button>
+      <button role="tab" data-cat="Pizzabrötchen" type="button">Pizzabrötchen</button>
+      <button role="tab" data-cat="Dips" type="button">Dips</button>
+      <button role="tab" data-cat="Getränke" type="button">Getränke</button>
+      <button role="tab" data-cat="Extras" type="button">Extras</button>
+    </section>
+
+    <section class="filters">
+      <button class="btn ghost" data-filter="vegan" type="button">vegan</button>
+      <button class="btn ghost" data-filter="vegetarisch" type="button">vegetarisch</button>
+      <button class="btn ghost" data-filter="scharf" type="button">scharf</button>
+      <button class="btn ghost" data-filter="bestseller" type="button">Bestseller</button>
+      <button class="btn ghost" data-filter="neu" type="button">Neu</button>
+      <button class="btn" id="resetFilters" type="button">Filter zurücksetzen</button>
+    </section>
+
+    <section id="menuGrid" class="card-grid" aria-live="polite"></section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-col">
+      <h3>Campania die Pizza</h3>
+      <p>Hamburgstraße 260<br>38114 Braunschweig</p>
+      <p><a href="tel:+49531234567">+49 531 234567</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Schnellzugriff</h4>
+      <ul>
+        <li><a href="menue.html">Speisekarte</a></li>
+        <li><a href="oeffnungszeiten.html">Öffnungszeiten</a></li>
+        <li><a href="bewertungen.html">Bewertungen</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <ul>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

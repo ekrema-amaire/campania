@@ -1,0 +1,16 @@
+[
+  { "zip": "38100", "mbw": 12.0, "fee": 2.5, "free_from": 20.0 },
+  { "zip": "38102", "mbw": 12.0, "fee": 2.5, "free_from": 20.0 },
+  { "zip": "38104", "mbw": 12.0, "fee": 2.5, "free_from": 20.0 },
+  { "zip": "38106", "mbw": 12.0, "fee": 2.5, "free_from": 20.0 },
+  { "zip": "38108", "mbw": 12.0, "fee": 2.5, "free_from": 20.0 },
+  { "zip": "38110", "mbw": 14.0, "fee": 3.0, "free_from": 25.0 },
+  { "zip": "38112", "mbw": 12.0, "fee": 2.5, "free_from": 20.0 },
+  { "zip": "38114", "mbw": 15.0, "fee": 2.0, "free_from": 30.0 },
+  { "zip": "38116", "mbw": 14.0, "fee": 3.0, "free_from": 25.0 },
+  { "zip": "38118", "mbw": 12.0, "fee": 2.5, "free_from": 20.0 },
+  { "zip": "38120", "mbw": 14.0, "fee": 3.0, "free_from": 25.0 },
+  { "zip": "38122", "mbw": 14.0, "fee": 3.0, "free_from": 25.0 },
+  { "zip": "38124", "mbw": 12.0, "fee": 2.5, "free_from": 20.0 },
+  { "zip": "38126", "mbw": 14.0, "fee": 3.0, "free_from": 25.0 }
+]

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kasse – Deine Bestellung | Campania die Pizza</title>
+  <meta name="description" content="Lieferadresse, Wunschzeit und Notizen angeben. Gast-Checkout ohne Registrierung.">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Scripts (Reihenfolge beibehalten) -->
+  <script defer src="assets/js/theme.js"></script>
+  <script defer src="assets/js/state.js"></script>
+  <script defer src="assets/js/ui.js"></script>
+  <script defer src="assets/js/cart.js"></script>
+  <script defer src="assets/js/checkout.js"></script>
+  <script defer src="assets/js/auth.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="logo">
+      <img src="assets/img/logo-light.svg" alt="Campania Logo (hell)" class="logo-img light">
+      <img src="assets/img/logo-dark.svg" alt="Campania Logo (dunkel)" class="logo-img dark">
+    </a>
+    <nav class="main-nav">
+      <a href="menue.html">Speisekarte</a>
+      <a href="oeffnungszeiten.html">Öffnungszeiten</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="kasse.html" aria-current="page" class="sr-only">Kasse</a>
+    </nav>
+    <div class="header-actions">
+      <button id="themeToggle" class="btn ghost" aria-label="Theme umschalten">🌗</button>
+      <a href="konto.html" class="btn link">Konto</a>
+      <button id="openCart" class="btn cart" aria-haspopup="dialog" aria-controls="cartDrawer">
+        Warenkorb <span id="cartBadge" class="badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Cart Drawer (in den Body verschoben) -->
+  <div id="cartDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-content">
+      <header class="drawer-header">
+        <h2 id="cartTitle">Warenkorb</h2>
+        <button class="btn icon" id="closeCart" aria-label="Warenkorb schließen" type="button">✕</button>
+      </header>
+      <div id="cartItems" class="drawer-body" aria-live="polite"></div>
+      <div class="drawer-footer">
+        <div id="cartTotals"></div>
+        <div class="drawer-actions">
+          <a href="kasse.html" id="checkoutBtn" class="btn primary" aria-disabled="true">Zur Kasse</a>
+          <button class="btn ghost" id="continueShopping" type="button">Weiter einkaufen</button>
+        </div>
+        <div id="cartMessages" class="cart-messages" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast (in den Body verschoben) -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main -->
+  <main id="content">
+    <section class="form" aria-labelledby="checkoutTitle">
+      <h1 id="checkoutTitle">Kasse</h1>
+      <ol>
+        <li><strong>Details</strong></li>
+        <li>Übersicht</li>
+        <li>Bestellung</li>
+      </ol>
+
+      <!-- Schritt 1 -->
+      <div id="step1">
+        <h2>Details</h2>
+        <div class="field">
+          <label for="modeField">Modus</label>
+          <input id="modeField" disabled>
+        </div>
+
+        <div id="deliveryFields">
+          <div class="field">
+            <label for="street">Straße & Nr.</label>
+            <input id="street" required>
+          </div>
+          <div class="field">
+            <label for="zip">PLZ</label>
+            <input id="zip" inputmode="numeric" maxlength="5" required>
+          </div>
+          <div class="field">
+            <label for="city">Ort</label>
+            <input id="city" value="Braunschweig" required>
+          </div>
+          <div class="field">
+            <label for="info">Etage / Hinweise (optional)</label>
+            <input id="info">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="note">Hinweis an die Küche (optional)</label>
+          <textarea id="note"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="email">E-Mail</label>
+          <input id="email" type="email" required>
+        </div>
+
+        <div class="field">
+          <label for="phone">Telefon (optional)</label>
+          <input id="phone" type="tel">
+        </div>
+
+        <div class="field">
+          <button id="toStep2" class="btn primary" type="button">Weiter</button>
+        </div>
+      </div>
+
+      <!-- Schritt 2 -->
+      <div id="step2" style="display:none;">
+        <h2>Übersicht</h2>
+        <div id="orderSummary"></div>
+
+        <div class="field">
+          <label>
+            <input id="agb" type="checkbox">
+            Ich akzeptiere die <a href="impressum.html">AGB</a> und habe die <a href="datenschutz.html">Datenschutzerklärung</a> gelesen.
+          </label>
+        </div>
+
+        <div class="field">
+          <button id="backTo1" class="btn ghost" type="button">Zurück</button>
+          <button id="toStep3" class="btn primary" aria-disabled="true" type="button">Zur Bestellung</button>
+        </div>
+      </div>
+
+      <!-- Schritt 3 -->
+      <div id="step3" style="display:none;">
+        <h2>Bestellung</h2>
+        <p>Zahlungsarten folgen. Heute zahlst du <strong>bar</strong> oder <strong>per Karte</strong> bei Lieferung/Abholung (falls verfügbar).</p>
+        <div class="field">
+          <button id="placeOrder" class="btn primary" type="button">Kostenpflichtig bestellen</button>
+        </div>
+        <div id="orderResult" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-col">
+      <h3>Campania die Pizza</h3>
+      <p>Hamburgstraße 260<br>38114 Braunschweig</p>
+      <p><a href="tel:+49531234567">+49 531 234567</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Schnellzugriff</h4>
+      <ul>
+        <li><a href="menue.html">Speisekarte</a></li>
+        <li><a href="oeffnungszeiten.html">Öffnungszeiten</a></li>
+        <li><a href="bewertungen.html">Bewertungen</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <ul>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

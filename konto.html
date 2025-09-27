@@ -1,0 +1,352 @@
+<!-- konto.html (bereinigt, inkl. Logout-Fallback & kleine Robustheits-Fixes) -->
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Konto – Campania die Pizza</title>
+  <meta name="description" content="Konto verwalten: Registrieren, Login, Profil, Adressen, Passwort ändern.">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Early gate: zeigt sofort die richtige Ansicht, ohne Flackern -->
+  <script>
+  (function(){
+    try{
+      const s = JSON.parse(localStorage.getItem('campania-session')||'null');
+      const u = JSON.parse(localStorage.getItem('campania-user')||'null');
+      document.documentElement.dataset.auth = (s && u && s.userId===u.id) ? 'in' : 'out';
+    }catch(e){ document.documentElement.dataset.auth = 'out'; }
+  })();
+  </script>
+
+  <style>
+    /* Ansichtsschalter ohne FOUC */
+    #authForms{display:none}
+    #accountDashboard{display:none}
+    html[data-auth="out"]  #authForms{display:block}
+    html[data-auth="in"]   #accountDashboard{display:block}
+    .muted{color:var(--muted,#6b7280)}
+    .stack > * + * { margin-top: .5rem; }
+  </style>
+
+  <!-- Basis-Skripte -->
+  <script defer src="assets/js/theme.js"></script>
+  <script defer src="assets/js/state.js"></script>
+  <script defer src="assets/js/ui.js"></script>
+  <script defer src="assets/js/cart.js"></script>
+
+  <!-- Auth (wird defer geladen) -->
+  <script defer src="assets/js/auth.js"></script>
+</head>
+
+<!-- Profil / Hydration -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Wenn Auth gar nicht vorhanden ist, bleiben die Felder leer — die Seite ist robust.
+  if (!window.Auth) return;
+
+  function hydrate() {
+    if (!Auth.isLoggedIn()) return;
+    const u = Auth.getUser() || {};
+
+    const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+    const setChk = (id, on)  => { const el = document.getElementById(id); if (el) el.checked = !!on; };
+
+    // Felder füllen
+    setVal('accFirst', u.first);
+    setVal('accLast',  u.last);
+    setVal('accEmail', u.email);
+    setVal('accPhone', u.profile?.phone);
+    setChk('accNewsletter', u.profile?.newsletter);
+
+    // „Willkommen, …“
+    const lbl = document.querySelector('[data-auth="accountLabel"]');
+    if (lbl) lbl.textContent = u.first || u.email || 'Konto';
+
+    // „Seit … dabei“
+    const s = document.getElementById('accSince');
+    if (s) {
+      const d = new Date(u.profile?.createdAt || Date.now());
+      s.textContent = d.toLocaleDateString('de-DE', { year:'numeric', month:'short', day:'2-digit' });
+    }
+  }
+
+  hydrate();
+  window.addEventListener('auth:change', hydrate);
+});
+</script>
+
+<!-- Ansicht umschalten -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.Auth) return;
+
+  function enforceView(){
+    const logged = Auth.isLoggedIn();
+    const forms = document.getElementById('authForms');
+    const dash  = document.getElementById('accountDashboard');
+
+    if (forms) forms.style.display = logged ? 'none' : 'block';
+    if (dash)  dash.style.display  = logged ? 'block' : 'none';
+
+    // Wenn eingeloggt und jemand #login oder #register aufruft -> Hash entfernen
+    if (logged && (location.hash === '#login' || location.hash === '#register')) {
+      history.replaceState({}, '', 'konto.html');
+    }
+  }
+
+  enforceView();
+  window.addEventListener('auth:change', enforceView);
+});
+</script>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="logo">
+      <img src="assets/img/logo-light.svg" alt="Campania Logo hell" class="logo-img light">
+      <img src="assets/img/logo-dark.svg"  alt="Campania Logo dunkel" class="logo-img dark">
+    </a>
+    <nav class="main-nav">
+      <a href="menue.html">Speisekarte</a>
+      <a href="oeffnungszeiten.html">Öffnungszeiten</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="header-actions">
+      <button id="themeToggle" class="btn ghost" aria-label="Theme umschalten">🌗</button>
+      <!-- Nur EIN Konto-Link: Text wird dynamisch zu „Konto (Vorname)“ -->
+      <a href="konto.html" data-auth="account">Konto</a>
+      <button id="openCart" class="btn cart" aria-haspopup="dialog" aria-controls="cartDrawer">Warenkorb <span id="cartBadge" class="badge">0</span></button>
+    </div>
+  </header>
+
+  <!-- Hauptinhalt -->
+  <main class="form" style="max-width: 860px; margin: 0 auto; padding: clamp(16px, 4vw, 32px);">
+    <h1>Konto</h1>
+
+    <!-- Nicht eingeloggt: Registrierung + Login -->
+    <div id="authForms" aria-live="polite">
+      <section aria-labelledby="regTitle" class="card" style="padding:1rem; margin-bottom:1rem;">
+        <h2 id="regTitle">Registrieren</h2>
+
+        <form id="regForm" novalidate>
+          <div class="field"><label for="regFirst">Vorname</label><input id="regFirst" autocomplete="given-name" placeholder="z. B. Alex"></div>
+          <div class="field"><label for="regLast">Nachname</label><input id="regLast" autocomplete="family-name" placeholder="z. B. Müller"></div>
+          <div class="field"><label for="regEmail">E-Mail</label><input id="regEmail" type="email" autocomplete="email" required aria-describedby="regMsg" placeholder="mail@beispiel.de"></div>
+          <div class="field"><label for="regPassword">Passwort (min. 6 Zeichen)</label><input id="regPassword" type="password" autocomplete="new-password" required minlength="6" aria-describedby="regMsg"></div>
+          <div class="field">
+            <button class="btn primary" id="registerBtn" type="button">Konto erstellen</button>
+          </div>
+          <div id="regMsg" class="hint" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <section aria-labelledby="loginTitle" class="card" style="padding:1rem;">
+        <h2 id="loginTitle">Login</h2>
+
+        <form id="loginForm" novalidate>
+          <div class="field"><label for="loginEmail">E-Mail</label><input id="loginEmail" type="email" autocomplete="email" required aria-describedby="loginMsg"></div>
+          <div class="field"><label for="loginPassword">Passwort</label><input id="loginPassword" type="password" autocomplete="current-password" required aria-describedby="loginMsg"></div>
+          <div class="field">
+            <button class="btn" id="loginBtn" type="button">Einloggen</button>
+          </div>
+          <div id="loginMsg" class="hint" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </div>
+
+    <!-- Eingeloggt: Dashboard -->
+    <section id="accountDashboard" style="display:none;">
+      <div class="card" style="padding:1rem; margin-bottom:1rem;">
+        <strong>Willkommen, <span data-auth="accountLabel">Konto</span></strong><br>
+        <span class="muted">Seit <span id="accSince">—</span> dabei</span>
+      </div>
+
+      <section aria-labelledby="pTitle" class="card" style="padding:1rem; margin-bottom:1rem;">
+        <h2 id="pTitle">Profil</h2>
+        <div class="field"><label for="accFirst">Vorname</label><input id="accFirst" autocomplete="given-name"></div>
+        <div class="field"><label for="accLast">Nachname</label><input id="accLast" autocomplete="family-name"></div>
+        <div class="field"><label for="accEmail">E-Mail</label><input id="accEmail" type="email" autocomplete="email"></div>
+        <div class="field"><label for="accPhone">Telefon</label><input id="accPhone" type="tel" autocomplete="tel" placeholder="+49 …"></div>
+        <div class="field"><label><input type="checkbox" id="accNewsletter"> Newsletter erhalten</label></div>
+        <div class="field">
+          <button class="btn" id="saveProfileBtn" type="button">Profil speichern</button>
+        </div>
+        <div id="profileMsg" class="hint" role="status" aria-live="polite"></div>
+      </section>
+
+      <section aria-labelledby="pwTitle" class="card" style="padding:1rem; margin-bottom:1rem;">
+        <h2 id="pwTitle">Passwort ändern</h2>
+        <div class="field"><label for="oldPwd">Altes Passwort</label><input id="oldPwd" type="password" autocomplete="current-password"></div>
+        <div class="field"><label for="newPwd">Neues Passwort</label><input id="newPwd" type="password" autocomplete="new-password"></div>
+        <div class="field">
+          <button class="btn" id="changePwdBtn" type="button">Passwort aktualisieren</button>
+        </div>
+        <div id="pwdMsg" class="hint" role="status" aria-live="polite"></div>
+      </section>
+
+      <section aria-labelledby="addrTitle" class="card" style="padding:1rem;">
+        <h2 id="addrTitle">Adressen</h2>
+        <div id="addrList" class="stack" style="margin-bottom:.75rem;"></div>
+
+        <div class="card" style="padding:.75rem;">
+          <h3>Adresse hinzufügen / bearbeiten</h3>
+          <div class="field"><label for="addrLabel">Bezeichnung</label><input id="addrLabel" placeholder="z. B. Zuhause, Arbeit"></div>
+          <div class="field"><label for="addrStreet">Straße & Nr.</label><input id="addrStreet" placeholder="Hamburgstraße 260"></div>
+          <div class="field"><label for="addrZip">PLZ</label><input id="addrZip" inputmode="numeric" maxlength="5" placeholder="38114"></div>
+          <div class="field"><label for="addrCity">Ort</label><input id="addrCity" value="Braunschweig"></div>
+          <div class="field"><label for="addrInfo">Zusatz (Etage/Klingel)</label><input id="addrInfo" placeholder="3. OG, Klingel 'Campania'"></div>
+          <div class="field"><label><input type="checkbox" id="addrDefault"> Als Standard speichern</label></div>
+          <div class="field">
+            <button class="btn" id="addrSaveBtn" type="button">Adresse speichern</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="field" style="margin-top:1rem;">
+        <button class="btn ghost" id="logoutBtn" type="button" aria-controls="accountDashboard">Logout</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-col">
+      <h3>Campania die Pizza</h3>
+      <p>Hamburgstraße 260<br>38114 Braunschweig</p>
+      <p><a href="tel:+49531234567">+49 531 234567</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Schnellzugriff</h4>
+      <ul>
+        <li><a href="menue.html">Speisekarte</a></li>
+        <li><a href="oeffnungszeiten.html">Öffnungszeiten</a></li>
+        <li><a href="bewertungen.html">Bewertungen</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <ul>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Warenkorb Drawer (falls nicht global vorhanden) -->
+  <div id="cartDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-content">
+      <header class="drawer-header">
+        <h2 id="cartTitle">Warenkorb</h2>
+        <button class="btn icon" id="closeCart" aria-label="Warenkorb schließen">✕</button>
+      </header>
+      <div id="cartItems" class="drawer-body" aria-live="polite"></div>
+      <div class="drawer-footer">
+        <div id="cartTotals"></div>
+        <div class="drawer-actions">
+          <a href="kasse.html" id="checkoutBtn" class="btn primary" aria-disabled="true">Zur Kasse</a>
+          <button class="btn ghost" id="continueShopping" type="button">Weiter einkaufen</button>
+        </div>
+        <div id="cartMessages" class="cart-messages" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Fallbacks & Wiring (sicher, tolerant) -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // (A) Setzt „Seit … dabei“, wenn Auth verfügbar ist
+    try {
+      if (window.Auth && Auth.isLoggedIn()) {
+        const u = Auth.getUser();
+        const d = new Date(u?.profile?.createdAt || Date.now());
+        const fmt = d.toLocaleDateString('de-DE',{year:'numeric',month:'short',day:'2-digit'});
+        const el = document.getElementById('accSince'); if (el) el.textContent = fmt;
+      }
+    } catch {}
+
+    // (B) Formularsends auf Buttons delegieren (keine Änderung der Logik)
+    document.getElementById('regForm')?.addEventListener('submit', (e)=>{ e.preventDefault(); document.getElementById('registerBtn')?.click(); });
+    document.getElementById('loginForm')?.addEventListener('submit', (e)=>{ e.preventDefault(); document.getElementById('loginBtn')?.click(); });
+
+    // (C) Registrieren Fallback (falls auth.js nicht autowires)
+    const regBtn = document.getElementById('registerBtn');
+    if (regBtn && !regBtn._wired) {
+      regBtn._wired = true;
+      regBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const msg = document.getElementById('regMsg');
+        if (!window.Auth || !Auth.register) { msg && (msg.textContent = 'Fehler: auth.js nicht geladen.'); return; }
+        try {
+          await Auth.register({
+            first: document.getElementById('regFirst')?.value || '',
+            last:  document.getElementById('regLast')?.value  || '',
+            email: document.getElementById('regEmail')?.value || '',
+            password: document.getElementById('regPassword')?.value || ''
+          });
+          const forms = document.getElementById('authForms');
+          const dash  = document.getElementById('accountDashboard');
+          if (forms) forms.style.display = 'none';
+          if (dash)  dash.style.display  = 'block';
+          msg && (msg.textContent = 'Registrierung erfolgreich – du bist eingeloggt.');
+          window.dispatchEvent(new CustomEvent('auth:change'));
+          setTimeout(() => {
+            try {
+              const u = Auth.getUser();
+              const d = new Date(u?.profile?.createdAt || Date.now());
+              const fmt = d.toLocaleDateString('de-DE',{year:'numeric',month:'short',day:'2-digit'});
+              const el = document.getElementById('accSince'); if (el) el.textContent = fmt;
+            } catch {}
+          }, 50);
+        } catch (err) {
+          msg && (msg.textContent =
+            err?.message === 'invalid_email'       ? 'Bitte gültige E-Mail eingeben.' :
+            err?.message === 'weak_password'       ? 'Passwort min. 6 Zeichen.' :
+            err?.message === 'already_has_account' ? 'In diesem Browser existiert bereits ein Konto.' :
+            'Registrierung fehlgeschlagen.'
+          );
+        }
+      });
+    }
+
+    // (D) **Logout-Fallback**: Wenn auth.js keine Binding macht, sorgt das hier dafür,
+    //     dass Logout den Auth-Status zurücksetzt.
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn && !logoutBtn._wired) {
+      logoutBtn._wired = true;
+      logoutBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const hint = document.getElementById('pwdMsg') || document.getElementById('profileMsg') || document.getElementById('regMsg');
+        try {
+          if (window.Auth && typeof Auth.logout === 'function') {
+            await Auth.logout();
+          } else {
+            // Fallback: localStorage aufräumen, falls keine API vorhanden
+            localStorage.removeItem('campania-session');
+            localStorage.removeItem('campania-user');
+          }
+          // UI aktualisieren
+          document.documentElement.dataset.auth = 'out';
+          const forms = document.getElementById('authForms');
+          const dash  = document.getElementById('accountDashboard');
+          if (forms) forms.style.display = 'block';
+          if (dash)  dash.style.display  = 'none';
+          window.dispatchEvent(new CustomEvent('auth:change'));
+          hint && (hint.textContent = 'Abgemeldet.');
+        } catch (err) {
+          hint && (hint.textContent = 'Logout fehlgeschlagen.');
+        }
+      });
+    }
+
+    // (E) Optional: Falls andere Buttons (saveProfileBtn, changePwdBtn, loginBtn, addrSaveBtn etc.)
+    //     nicht von auth.js gebunden werden, ist das bewusst delegiert — diese Seite bietet Fallbacks
+    //     nur für kritische Auth-Pflege (register, logout). Wenn du willst, füge ich die weiteren
+    //     Fallbacks in einem nächsten Schritt hinzu.
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "monday_2pizza_20",
+    "name": "Montags-Deal",
+    "description": "2 Pizzen – 20% ab 18 € Warenkorb",
+    "day": "mon",
+    "conditions": {
+      "category": "Pizza",
+      "min_count": 2,
+      "cart_min": 18.0
+    },
+    "discount": {
+      "type": "percent",
+      "value": 20
+    },
+    "combinable": false
+  }
+]

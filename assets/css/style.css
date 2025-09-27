@@ -1,0 +1,382 @@
+/* ===============
+   Campania – Global Styles (clean)
+   Fokus: Konsistenz, A11y, Dark/Light, kleine Fixes
+   =============== */
+
+/* Core tokens */
+:root {
+  --bg: #ffffff;
+  --surface: #faf7f3;
+  --text: #141414;
+  --muted: #666666;
+  --border: rgba(0,0,0,0.12);
+  --primary: #d64045;           /* appetitliches Rot */
+  --primary-contrast: #ffffff;  
+  --accent: #2a9d8f;            /* frisches Grün */
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --ring: 0 0 0 3px rgba(214,64,69,.35);
+}
+
+/* System-Dark, wenn data-theme="system" und User Dark bevorzugt */
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] {
+    --bg: #0f1115;
+    --surface: #161a22;
+    --text: #f3f4f6;
+    --muted: #a6adbb;
+    --border: rgba(255,255,255,0.12);
+    --primary: #ff544f;
+    --primary-contrast: #0f1115;
+    --accent: #7bdcb5;
+    --shadow: 0 2px 16px rgba(0,0,0,0.5);
+  }
+}
+
+/* Manuell erzwungener Dark Mode */
+html[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #161a22;
+  --text: #f3f4f6;
+  --muted: #a6adbb;
+  --border: rgba(255,255,255,0.12);
+  --primary: #ff544f;
+  --primary-contrast: #ffffff;
+  --accent: #7bdcb5;
+  --shadow: 0 2px 16px rgba(0,0,0,0.5);
+}
+
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Links */
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Header & Footer */
+.site-header, .site-footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem clamp(1rem, 2vw, 2rem);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.site-footer {
+  border-top: 1px solid var(--border);
+  border-bottom: none;
+  grid-template-columns: repeat(3, 1fr);
+}
+.site-footer h3, .site-footer h4 { margin: 0 0 .5rem; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col li { margin: .25rem 0; }
+
+/* Logos für Themes */
+.logo-img { height: 36px; display: none; }
+.logo-img.light { display: inline-block; }
+html[data-theme="dark"] .logo-img.light { display: none; }
+html[data-theme="dark"] .logo-img.dark { display: inline-block; }
+
+/* Navigation */
+.main-nav a { margin-right: 1rem; font-weight: 600; }
+.header-actions { display: flex; gap: .5rem; align-items: center; }
+
+/* Buttons */
+.btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: .6rem .9rem;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  color: var(--text);
+  transition: filter .15s ease, background-color .15s ease, border-color .15s ease;
+}
+.btn:hover { filter: saturate(1.05); }
+.btn:focus-visible { outline: none; box-shadow: var(--ring); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+.btn.primary { background: var(--primary); color: var(--primary-contrast); border-color: transparent; }
+.btn.ghost   { background: transparent; }
+.btn.link    { text-decoration: none; display:inline-flex; align-items:center; }
+.btn.icon    { border-radius: 50%; width: 40px; height: 40px; display:grid; place-items:center; }
+
+/* Badge */
+.badge {
+  display: inline-grid; place-items: center;
+  min-width: 1.4rem; height: 1.4rem; padding: 0 .3rem;
+  background: var(--primary); color: var(--primary-contrast); border-radius: 1rem;
+  font-size: .8rem; margin-left: .35rem;
+}
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 40vh;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 4rem);
+  background: linear-gradient(180deg, var(--surface), transparent);
+}
+.hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 .5rem; }
+.hero p  { margin: 0 0 1rem; color: var(--muted); }
+
+/* Cards & Grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+.card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.card .card-body { padding: .8rem; }
+.card .title { font-weight: 700; margin: 0 0 .25rem; }
+.card .muted { color: var(--muted); font-size: .9rem; }
+.card .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: .6rem; }
+.card .add { display: inline-grid; place-items:center; width: 40px; height: 40px; border-radius: 12px; }
+
+/* Tabs */
+.tabs { display:flex; gap:.5rem; padding: 1rem; border-bottom: 1px solid var(--border); }
+.tabs button { background: transparent; border: 1px solid var(--border); padding:.5rem .8rem; border-radius: 999px; cursor:pointer; color: var(--text); }
+.tabs button[aria-selected="true"] { background: var(--primary); color: var(--primary-contrast); border-color: transparent; }
+
+/* Filters */
+.filters { display:flex; flex-wrap: wrap; gap:.5rem; padding: 0 1rem 1rem; }
+
+/* Drawer (Cart) */
+.drawer { position: fixed; inset: 0; display: none; }
+.drawer[aria-hidden="false"] { display: block; }
+.drawer::before{ content:""; position: absolute; inset: 0; background: rgba(0,0,0,.45); }
+.drawer .drawer-content{ position: absolute; right: 0; top: 0; bottom: 0; width: min(420px, 100%); background: var(--bg); border-left: 1px solid var(--border); display: flex; flex-direction: column; z-index: 1; }
+.drawer-header, .drawer-footer { padding: 1rem; border-bottom: 1px solid var(--border); }
+.drawer-body { padding: 1rem; overflow: auto; flex: 1; }
+.drawer-footer { border-top: 1px solid var(--border); border-bottom: none; }
+
+/* Cart */
+.cart-item { display:grid; grid-template-columns: 64px 1fr auto; gap:.75rem; padding:.5rem 0; border-bottom: 1px dashed var(--border); }
+.cart-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 12px; }
+.cart-item .qty { display:flex; gap:.25rem; align-items:center; }
+.cart-item .qty button { width: 28px; height: 28px; border-radius: 8px; }
+.cart-summary { margin-top: .5rem; color: var(--muted); }
+
+/* Toast */
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: .75rem 1rem; border-radius: 12px; box-shadow: var(--shadow); display:none; }
+.toast.show { display:block; }
+
+/* Notice/Info */
+.notice { padding: .75rem 1rem; margin: 1rem; border:1px solid var(--border); border-radius: 12px; background: var(--surface); }
+
+/* Forms */
+.form { max-width: 720px; margin: 0 auto; padding: 1rem; }
+.field { margin-bottom: 1rem; }
+label { display:block; font-weight: 600; margin-bottom: .25rem; }
+input, select, textarea { width: 100%; padding: .65rem .8rem; border-radius: 12px; border:1px solid var(--border); background: var(--bg); color: var(--text); }
+.field .hint { font-size: .9rem; color: var(--muted); }
+.field .error { color: #b00020; margin-top: .25rem; }
+
+/* Skeletons */
+.skeleton { background: linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.12), rgba(0,0,0,0.06)); background-size: 200% 100%; animation: pulse 1s infinite linear; }
+@keyframes pulse { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .site-header { grid-template-columns: auto 1fr auto; }
+  .main-nav { display:none; }
+}
+
+/* Mode-Choice (Lieferung / Abholung) – unterstützt sowohl .choice als auch .btn in .choices */
+.choices .choice, .choices .btn{
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-weight: 700;
+  padding: 1rem;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.choices .choice:hover, .choices .btn:hover{ border-color: var(--primary); }
+.choices .choice:focus-visible, .choices .btn:focus-visible{ outline: none; box-shadow: var(--ring); }
+.choices .choice[aria-pressed="true"], .choices .btn[aria-pressed="true"]{ background: var(--primary); border-color: var(--primary); color: var(--primary-contrast); }
+.choices .choice[aria-pressed="true"]:hover, .choices .btn[aria-pressed="true"]:hover{ filter: brightness(.95); }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+/* ====== Campania UI: Polishing Patch (safe) ====== */
+/* Layout helpers */
+.container-narrow { max-width: 980px; margin-inline: auto; padding-inline: 16px; }
+.stack-16 > * + * { margin-top: 16px; }
+
+/* Surfaces & Shadows (nutzt vorhandene Variablen) */
+.surface { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+.shadow      { box-shadow: var(--shadow); }
+.shadow-soft { box-shadow: 0 6px 14px rgba(0,0,0,.04), 0 1px 4px rgba(0,0,0,.06); }
+
+/* Hero kompakter & zentriert */
+.hero.hero--sm { padding: 16px 0; }
+.hero .hero-inner { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+.hero.hero--sm h1 { margin: 4px 0 6px; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.15; }
+.hero.hero--sm p { margin: 0; color: var(--muted); }
+
+/* Cards etwas luftiger innen, aber kompakt außen */
+.card.pad-20 { padding: 20px; }
+.card.pad-16 { padding: 16px; }
+
+/* Typografie-Feinschliff */
+.section-title { margin: 0 0 .5rem; font-weight: 700; }
+.form .field + .field { margin-top: 10px; }
+.hint { color: var(--muted); }
+
+/* Inputs: kleiner, klarer Fokus (Farben bleiben gleich) */
+input[type="text"], input[type="search"], input[type="number"] {
+  background: #fff; border-color: var(--border);
+}
+
+/* Utility: .hide für „display:none“ (falls noch nicht global vorhanden) */
+.hide { display: none; }
+
+/* Öffnungsstatus-Box: klare Linie & kompakter Text */
+#openStatus { line-height: 1.35; }
+
+/* Footer minimal straffer */
+.site-footer { padding-top: 18px; padding-bottom: 18px; }
+.site-footer .footer-col h3, 
+.site-footer .footer-col h4 { margin: 0 0 6px; }
+.site-footer .footer-col p, 
+.site-footer .footer-col ul { margin: 0 0 6px; }
+/* ======= Above-the-fold Pack für die Startseite ======= */
+/* Basis: etwas schlankere Header-/Footer-Polsterung */
+.site-header { padding-block: 8px; }
+.site-footer { padding-block: 12px; }
+
+/* Kompakter Hero */
+.hero.hero--sm { padding: 10px 0; }
+.hero.hero--sm h1 { margin: 4px 0 4px; font-size: clamp(1.35rem, 2.6vw, 1.8rem); line-height: 1.15; }
+.hero.hero--sm p  { margin: 0; }
+
+/* Main-Container: enger vertikaler Rhythmus */
+.container-narrow.stack-16 > * + * { margin-top: 12px; }
+
+/* Öffnungsstatus/Bestellstart-Karten etwas knapper */
+.card.pad-20 { padding: 16px; }
+.card.pad-16 { padding: 12px; }
+.card.surface.pad-20, .card.surface.pad-16 { border-radius: 12px; }
+
+/* Form & Controls kompakter (nur Startseite trifft die IDs/Klassen-Kombi) */
+#content .form .field + .field { margin-top: 8px; }
+#content .choices { gap: 8px; margin: 10px 0; }
+#content input[type="text"],
+#content input[type="search"],
+#content input[type="number"] { padding: 10px 12px; }
+
+/* --- Stufe 2: bei kleineren Laptops (max-height: 900px) --- */
+@media (max-height: 900px) {
+  .hero.hero--sm { padding: 8px 0; }
+  .hero.hero--sm h1 { font-size: clamp(1.3rem, 2.2vw, 1.7rem); }
+  .card.pad-20 { padding: 14px; }
+  .card.pad-16 { padding: 10px; }
+  #content .choices { gap: 6px; margin: 8px 0; }
+  #content input[type="text"],
+  #content input[type="search"],
+  #content input[type="number"] { padding: 9px 11px; }
+}
+
+/* --- Stufe 3: bei flacheren Displays (max-height: 800px) --- */
+@media (max-height: 800px) {
+  .site-header { padding-block: 6px; }
+  .hero.hero--sm { padding: 6px 0; }
+  .hero.hero--sm h1 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+  .container-narrow.stack-16 > * + * { margin-top: 10px; }
+  .card.pad-20 { padding: 12px; }
+  .card.pad-16 { padding: 9px; }
+  #content .form .field + .field { margin-top: 6px; }
+  #content input[type="text"],
+  #content input[type="search"],
+  #content input[type="number"] { padding: 8px 10px; }
+}
+
+/* --- Stufe 4: sehr flache Bildschirme (max-height: 700px) --- */
+@media (max-height: 700px) {
+  .hero.hero--sm { padding: 4px 0; }
+  .hero.hero--sm h1 { font-size: clamp(1.15rem, 1.8vw, 1.5rem); }
+  .card.pad-20 { padding: 10px; }
+  .card.pad-16 { padding: 8px; }
+  #content .choices { gap: 4px; margin: 6px 0; }
+  #content .form .field + .field { margin-top: 4px; }
+  #content input[type="text"],
+  #content input[type="search"],
+  #content input[type="number"] { padding: 7px 9px; }
+}
+
+/* Mobile-HUD (Adressleiste) berücksichtigen: nutze 'svh' wenn verfügbar */
+@supports (height: 100svh) {
+  .hero.hero--sm { min-height: 12svh; } /* hält Hero klein, aber stabil */
+}
+/* Produkt-Modal: Extras sauber in einer Zeile ausrichten */
+.drawer .field label.option {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* nicht auseinanderziehen */
+  gap: .5rem;                  /* Abstand Box <-> Text */
+  margin: 0;                   /* kein zusätzlicher Abstand */
+  line-height: 1.35;
+}
+
+.drawer .field label.option input[type="checkbox"] {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.drawer .field label.option span {
+  flex: 1 1 auto;              /* Text nimmt restliche Breite */
+}
+/* === FIX: Form-Controls nicht mehr kaputt machen === */
+
+/* 1) Checkboxen & Radios sollen NICHT width:100% erben */
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  inline-size: auto;   /* für Sicherheit */
+  display: inline-block;
+  margin: 0;
+}
+
+/* 2) (Optional) Falls dein globales input-100%-Rule bleiben soll,
+      schränke es künftig besser ein:  */
+input:not([type="checkbox"]):not([type="radio"]) {
+  width: 100%;
+}
+
+/* 3) Produkt-Modal: Label + Checkbox in eine Reihe, schön ausgerichtet */
+.drawer .field label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: .5rem;          /* kleiner Abstand zwischen Box und Text */
+  margin: 0;           /* kein extra Abstand */
+  line-height: 1.35;
+  white-space: normal; /* sicherstellen, dass Text nicht wegschiebt */
+}
+
+/* 4) Checkbox im Modal ohne zusätzliche Ränder */
+.drawer .field label input[type="checkbox"] {
+  flex: 0 0 auto;
+  margin: 0;
+}

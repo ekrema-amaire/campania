@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Datenschutz | Campania die Pizza</title>
+  <meta name="description" content="Unsere Datenschutzerklärung nach DSGVO.">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Scripts -->
+  <script defer src="assets/js/theme.js"></script>
+  <script defer src="assets/js/state.js"></script>
+  <script defer src="assets/js/ui.js"></script>
+  <script defer src="assets/js/cart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="logo">
+      <img src="assets/img/logo-light.svg" alt="Campania Logo hell" class="logo-img light">
+      <img src="assets/img/logo-dark.svg" alt="Campania Logo dunkel" class="logo-img dark">
+    </a>
+    <nav class="main-nav">
+      <a href="menue.html">Speisekarte</a>
+      <a href="oeffnungszeiten.html">Öffnungszeiten</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="header-actions">
+      <button id="themeToggle" class="btn ghost" type="button" aria-label="Theme umschalten">🌗</button>
+      <a href="konto.html" class="btn link">Konto</a>
+      <button id="openCart" class="btn cart" type="button" aria-haspopup="dialog" aria-controls="cartDrawer">
+        Warenkorb <span id="cartBadge" class="badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-content">
+      <header class="drawer-header">
+        <h2 id="cartTitle">Warenkorb</h2>
+        <button class="btn icon" id="closeCart" type="button" aria-label="Warenkorb schließen">✕</button>
+      </header>
+      <div id="cartItems" class="drawer-body" aria-live="polite"></div>
+      <div class="drawer-footer">
+        <div id="cartTotals"></div>
+        <div class="drawer-actions">
+          <a href="kasse.html" id="checkoutBtn" class="btn primary" aria-disabled="true">Zur Kasse</a>
+          <button class="btn ghost" id="continueShopping" type="button">Weiter einkaufen</button>
+        </div>
+        <div id="cartMessages" class="cart-messages" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main -->
+  <main class="form">
+    <h1>Datenschutzerklärung</h1>
+    <p>Wir nehmen den Schutz deiner persönlichen Daten sehr ernst. Nachfolgend informieren wir dich gemäß Art. 13 DSGVO über die Verarbeitung deiner Daten auf dieser Website.</p>
+
+    <section>
+      <h2>1. Verantwortlicher</h2>
+      <p>Campania die Pizza<br>Hamburgstraße 260, 38114 Braunschweig<br>Telefon: <a href="tel:+49531234567">+49 531 234567</a><br>E-Mail: <a href="mailto:info@example.com">info@example.com</a></p>
+    </section>
+
+    <section>
+      <h2>2. Erhebung und Speicherung personenbezogener Daten</h2>
+      <p>Wir erheben personenbezogene Daten (z. B. Name, Adresse, E-Mail, Telefonnummer) nur, soweit dies für die Nutzung unserer Website und zur Durchführung von Bestellungen erforderlich ist.</p>
+    </section>
+
+    <section>
+      <h2>3. Cookies & Tracking</h2>
+      <p>Unsere Website verwendet Cookies, um die Nutzerfreundlichkeit zu verbessern. Du kannst die Speicherung von Cookies in deinem Browser verhindern, möglicherweise stehen dir dann jedoch nicht alle Funktionen zur Verfügung.</p>
+    </section>
+
+    <section>
+      <h2>4. Weitergabe von Daten</h2>
+      <p>Eine Weitergabe deiner Daten an Dritte erfolgt ausschließlich, wenn dies gesetzlich erlaubt ist oder du eingewilligt hast (z. B. zur Zahlungsabwicklung oder Lieferung).</p>
+    </section>
+
+    <section>
+      <h2>5. Deine Rechte</h2>
+      <ul>
+        <li>Auskunft (Art. 15 DSGVO)</li>
+        <li>Berichtigung (Art. 16 DSGVO)</li>
+        <li>Löschung (Art. 17 DSGVO)</li>
+        <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+        <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+        <li>Widerspruch (Art. 21 DSGVO)</li>
+      </ul>
+    </section>
+
+    <p class="muted">Stand: <!-- aktuelles Datum einsetzen --></p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-col">
+      <h3>Campania die Pizza</h3>
+      <p>Hamburgstraße 260<br>38114 Braunschweig</p>
+      <p><a href="tel:+49531234567">+49 531 234567</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Schnellzugriff</h4>
+      <ul>
+        <li><a href="menue.html">Speisekarte</a></li>
+        <li><a href="oeffnungszeiten.html">Öffnungszeiten</a></li>
+        <li><a href="bewertungen.html">Bewertungen</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <ul>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html" aria-current="page">Datenschutz</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

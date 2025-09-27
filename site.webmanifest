@@ -1,0 +1,11 @@
+{
+  "name": "Campania die Pizza",
+  "short_name": "Campania",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#d64045",
+  "icons": [
+    { "src": "assets/img/favicon-light.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

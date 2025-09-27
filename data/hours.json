@@ -1,0 +1,33 @@
+{
+  "timezone": "Europe/Berlin",
+  "regular": {
+    "mon":  { "Closed": true },
+    "tue":  { "open": "12:00", "close": "22:00", "last_order": "21:30" },
+    "wed":  { "open": "12:00", "close": "22:00", "last_order": "21:30" },
+    "thu":  { "open": "12:00", "close": "22:00", "last_order": "21:30" },
+    "fri":  { "open": "12:00", "close": "22:00", "last_order": "22:30" },
+    "sat":  { "open": "12:00", "close": "22:00", "last_order": "22:30" },
+    "sun":  { "open": "12:00", "close": "22:00", "last_order": "20:30" }
+  },
+  "overrides": [
+    {
+      "date": "2025-12-24",
+      "open": "12:00",
+      "close": "16:00",
+      "last_order": "15:30",
+      "note": "Heiligabend – verkürzt geöffnet"
+    },
+    {
+      "date": "2025-12-25",
+      "closed": true,
+      "note": "1. Weihnachtstag – geschlossen"
+    },
+    {
+      "date": "2025-12-31",
+      "open": "12:00",
+      "close": "20:00",
+      "last_order": "19:30",
+      "note": "Silvester – verkürzt geöffnet"
+    }
+  ]
+}
