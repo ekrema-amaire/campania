@@ -18,7 +18,7 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="stylesheet" href="assets/css/style.css">
-   <script defer src="assets/js/theme.js"></script>
+  <script defer src="assets/js/theme.js"></script>
   <script defer src="assets/js/state.js"></script>
   <script defer src="assets/js/ui.js"></script>
   <script defer src="assets/js/cart.js"></script>
@@ -97,7 +97,9 @@
 
         <div id="zipSection" class="field hide">
           <label for="zip">Postleitzahl</label>
-          <input id="zip" name="zip" inputmode="numeric" pattern="\d{5}" maxlength="5" autocomplete="postal-code" aria-describedby="zipHint zipError zipInfo" placeholder="z. B. 38100">
+          <input id="zip" name="zip" inputmode="numeric" pattern="\d{5}" maxlength="5"
+                 autocomplete="postal-code" aria-describedby="zipHint zipError zipInfo"
+                 placeholder="z. B. 38100">
           <div id="zipHint" class="hint">Bitte gib deine 5-stellige PLZ ein.</div>
           <div id="zipError" class="error" role="alert" aria-live="assertive"></div>
           <div id="zipInfo" class="notice hide" role="status" aria-live="polite"></div>
@@ -159,10 +161,26 @@
     function buildRuleMap(){ ruleMap = new Map(rules.map(r => [String(r.zip), r])); }
     function findRule(z){ if(!ruleMap) buildRuleMap(); return ruleMap.get(String(z)); }
 
+    // --- Neu: Regel speichern/clearen + Events für Cart/Kasse
+    function saveDeliveryRule(rule, zip) {
+      const payload = {
+        zip: String(zip),
+        mbw: Number(rule.mbw || 0),
+        fee: Number(rule.fee || 0),
+        free_from: Number(rule.free_from || 0)
+      };
+      try { localStorage.setItem('campania-delivery-rule', JSON.stringify(payload)); } catch {}
+      try { window.dispatchEvent(new CustomEvent('campania:delivery-rule', { detail: payload })); } catch {}
+    }
+    function clearDeliveryRule() {
+      try { localStorage.removeItem('campania-delivery-rule'); } catch {}
+      try { window.dispatchEvent(new Event('campania:delivery-rule-cleared')); } catch {}
+    }
+
     function chooseDelivery(){
       mode = 'delivery';
       setPressed(deliveryBtn, true); setPressed(pickupBtn, false);
-      zipSection.classList.remove('hide'); // <-- Änderung: immer sichtbar
+      zipSection.classList.remove('hide'); // Sichtbarkeit erzwingen
       showBlock(zipSection);
       maybeEnableContinue();
       zipInput?.focus();
@@ -172,6 +190,7 @@
       setPressed(deliveryBtn, false); setPressed(pickupBtn, true);
       hideEl(zipSection);
       zipError.textContent = ''; zipInfo.textContent = ''; hideEl(zipInfo);
+      clearDeliveryRule(); // Regel entfernen (keine Lieferung)
       enable(contBtn); contBtn.focus();
     }
 
@@ -179,22 +198,71 @@
     function validateZip(){
       zipError.textContent=''; zipInfo.textContent=''; hideEl(zipInfo);
       const val = (zipInput.value||'').trim();
-      if(!validateZipFormat(val)){ disable(contBtn); zipError.textContent = val.length ? 'Diese PLZ hat kein gültiges Format (5 Ziffern).' : ''; return false; }
+      if(!validateZipFormat(val)){
+        clearDeliveryRule();
+        disable(contBtn);
+        zipError.textContent = val.length ? 'Diese PLZ hat kein gültiges Format (5 Ziffern).' : '';
+        return false;
+      }
       const rule = findRule(val);
-      if(!rule){ disable(contBtn); zipError.textContent='Für diese PLZ bieten wir aktuell keine Lieferung an.'; return false; }
-      enable(contBtn); zipInfo.textContent = rule.info || 'Lieferung in deinem Gebiet verfügbar.'; showBlock(zipInfo); return true;
+      if(!rule){
+        clearDeliveryRule();
+        disable(contBtn);
+        zipError.textContent='Für diese PLZ bieten wir aktuell keine Lieferung an.';
+        return false;
+      }
+
+      const fee  = Number(rule.fee || 0);
+      const free = Number(rule.free_from || 0);
+      const mbw  = Number(rule.mbw || 0);
+
+      const feeTxt  = fee > 0 ? `Liefergebühr: ${fee.toFixed(2).replace('.', ',')} €` : 'Lieferung kostenlos';
+      const freeTxt = free > 0 ? ` · gratis ab ${free.toFixed(2).replace('.', ',')} €` : '';
+      const mbwTxt  = mbw  > 0 ? ` · Mindestbestellwert: ${mbw.toFixed(2).replace('.', ',')} €` : '';
+
+      zipInfo.textContent = `${feeTxt}${freeTxt}${mbwTxt}`;
+      showBlock(zipInfo);
+      enable(contBtn);
+
+      // Regel für Menü/Kasse/Warenkorb persistieren
+      saveDeliveryRule(rule, val);
+      return true;
     }
 
     let zipTimer; function onZipInput(){ clearTimeout(zipTimer); zipTimer = setTimeout(validateZip, 160); }
     function maybeEnableContinue(){ if(mode==='pickup'){enable(contBtn);return;} if(mode==='delivery'){validateZip();return;} disable(contBtn); }
 
     async function loadRules(){
-      try{ const res = await fetch('data/plz.json', { cache:'no-store' }); if(!res.ok) throw new Error(); rules = await res.json(); buildRuleMap(); }
-      catch{ rules=[]; buildRuleMap(); if(mode==='delivery'){ zipError.textContent='Lieferprüfung momentan nicht möglich. Bitte versuche später erneut oder wähle Abholung.'; disable(contBtn);} }
+      try{
+        const res = await fetch('data/plz.json', { cache:'no-store' });
+        if(!res.ok) throw new Error();
+        rules = await res.json();
+        buildRuleMap();
+      }catch{
+        rules=[]; buildRuleMap();
+        if(mode==='delivery'){
+          zipError.textContent='Lieferprüfung momentan nicht möglich. Bitte versuche später erneut oder wähle Abholung.';
+          disable(contBtn);
+        }
+      }
     }
 
-    function persistMode(){ try{ localStorage.setItem('campania-mode-confirmed', JSON.stringify({mode, zip: zipInput?.value || null})); }catch{} }
-    function resetAll(){ setPressed(deliveryBtn,false); setPressed(pickupBtn,false); mode=null; if(zipInput) zipInput.value=''; hideEl(zipSection); zipError.textContent=''; zipInfo.textContent=''; hideEl(zipInfo); disable(contBtn); try{localStorage.removeItem('campania-mode-confirmed');}catch{} }
+    function persistMode(){
+      try{
+        const rule = JSON.parse(localStorage.getItem('campania-delivery-rule') || 'null');
+        localStorage.setItem('campania-mode-confirmed',
+          JSON.stringify({ mode, zip: zipInput?.value || null, rule })
+        );
+      }catch{}
+    }
+    function resetAll(){
+      setPressed(deliveryBtn,false); setPressed(pickupBtn,false);
+      mode=null; if(zipInput) zipInput.value='';
+      hideEl(zipSection); zipError.textContent=''; zipInfo.textContent=''; hideEl(zipInfo);
+      clearDeliveryRule();
+      disable(contBtn);
+      try{ localStorage.removeItem('campania-mode-confirmed'); }catch{}
+    }
 
     deliveryBtn.addEventListener('click', chooseDelivery);
     pickupBtn.addEventListener('click',   choosePickup);
@@ -204,14 +272,18 @@
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
       if(mode === 'delivery' && !validateZip()) return;
-      persistMode(); window.location.href = 'menue.html';
+      persistMode();
+      window.location.href = 'menue.html';
     });
 
     disable(contBtn); hideEl(zipSection); loadRules();
     try{
       const saved = JSON.parse(localStorage.getItem('campania-mode-confirmed')||'null');
       if(saved?.mode === 'pickup'){ choosePickup(); }
-      if(saved?.mode === 'delivery'){ chooseDelivery(); if(saved.zip){ zipInput.value=saved.zip; validateZip(); } }
+      if(saved?.mode === 'delivery'){
+        chooseDelivery();
+        if(saved.zip){ zipInput.value=saved.zip; validateZip(); }
+      }
     }catch{}
   })();
   </script>
