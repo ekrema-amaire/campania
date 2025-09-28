@@ -1,0 +1,879 @@
+[
+  {
+    "id": "ord_mg0v88ku",
+    "createdAt": "2025-09-26T13:16:19.950Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "test@example.com",
+      "phone": "0531-1234567"
+    },
+    "address": {
+      "street": "Hamburgstr. 260",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": "3. OG"
+    },
+    "note": "ohne Zwiebeln",
+    "items": [
+      {
+        "id": "p_margherita",
+        "name": "Margherita",
+        "qty": 2,
+        "price": 7.5,
+        "extras": [
+          "Knoblauch"
+        ]
+      }
+    ],
+    "totals": {
+      "subtotal": 15,
+      "delivery": 2,
+      "discount": 0,
+      "total": 17
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg0vcfps",
+    "createdAt": "2025-09-26T13:19:35.824Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "test@example.com",
+      "phone": "0531-1234567"
+    },
+    "address": {
+      "street": "Hamburgstraße 260",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": "3. OG"
+    },
+    "note": "ohne Zwiebeln",
+    "items": [
+      {
+        "id": "p_margherita",
+        "name": "Margherita",
+        "qty": 2,
+        "price": 7.5,
+        "extras": [
+          "Knoblauch"
+        ]
+      }
+    ],
+    "totals": {
+      "subtotal": 15,
+      "delivery": 2,
+      "discount": 0,
+      "total": 17
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg0wts6o",
+    "createdAt": "2025-09-26T14:01:04.752Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_hollandaise",
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 21.8,
+      "delivery": 0,
+      "discount": 0,
+      "total": 21.8
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg0xc17l",
+    "createdAt": "2025-09-26T14:15:16.257Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_hollandaise",
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 21.8,
+      "delivery": 0,
+      "discount": 0,
+      "total": 21.8
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg0xojov",
+    "createdAt": "2025-09-26T14:25:00.079Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_franco-pepe",
+        "name": "Franco Pepe",
+        "qty": 1,
+        "price": 9.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_gorgonzola-e-noci",
+        "name": "Gorgonzola e Noci",
+        "qty": 1,
+        "price": 12.5,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 22.4,
+      "delivery": 0,
+      "discount": 0,
+      "total": 22.4
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg0xyp7b",
+    "createdAt": "2025-09-26T14:32:53.783Z",
+    "mode": "pickup",
+    "customer": {
+      "email": "kunde@example.com",
+      "phone": "0157-123456"
+    },
+    "address": {},
+    "note": "scharf",
+    "items": [
+      {
+        "id": "p_salami",
+        "name": "Salami",
+        "qty": 1,
+        "price": 8.5
+      }
+    ],
+    "totals": {
+      "subtotal": 8.5,
+      "delivery": 0,
+      "discount": 0,
+      "total": 8.5
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg0yfluj",
+    "createdAt": "2025-09-26T14:46:02.587Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "owais.ahmad.najem@gmail.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_gorgonzola-e-noci",
+        "name": "Gorgonzola e Noci",
+        "qty": 1,
+        "price": 12.5,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 23.4,
+      "delivery": 0,
+      "discount": 0,
+      "total": 23.4
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg0yp4m8",
+    "createdAt": "2025-09-26T14:53:26.816Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "campaniadipizza260@gmail.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Saldersche str.",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_gorgonzola-e-noci",
+        "name": "Gorgonzola e Noci",
+        "qty": 1,
+        "price": 12.5,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 23.4,
+      "delivery": 0,
+      "discount": 0,
+      "total": 23.4
+    },
+    "status": "in_progress",
+    "updatedAt": "2025-09-26T14:53:57.970Z"
+  },
+  {
+    "id": "ord_mg0zmu7s",
+    "createdAt": "2025-09-26T15:19:39.640Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "ekrema1999@gmail.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_gorgonzola-e-noci",
+        "name": "Gorgonzola e Noci",
+        "qty": 1,
+        "price": 12.5,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 23.4,
+      "delivery": 0,
+      "discount": 0,
+      "total": 23.4
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg10g0r6",
+    "createdAt": "2025-09-26T15:42:21.138Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38100",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "Hallo",
+    "items": [
+      {
+        "id": "p_hollandaise",
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "s_chicken-nuggets",
+        "name": "Chicken Nuggets",
+        "qty": 1,
+        "price": 5,
+        "size": "6 Stück",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 26.8,
+      "delivery": 0,
+      "discount": 0,
+      "total": 26.8
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg10k28u",
+    "createdAt": "2025-09-26T15:45:29.694Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "owais.ahmad.najem@gmail.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "ksdfjds",
+      "zip": "38100",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_hollandaise",
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "s_chicken-nuggets",
+        "name": "Chicken Nuggets",
+        "qty": 1,
+        "price": 5,
+        "size": "6 Stück",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 26.8,
+      "delivery": 0,
+      "discount": 0,
+      "total": 26.8
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg1139js",
+    "createdAt": "2025-09-26T16:00:25.624Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38100",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_hollandaise",
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "s_chicken-nuggets",
+        "name": "Chicken Nuggets",
+        "qty": 1,
+        "price": 5,
+        "size": "6 Stück",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 26.8,
+      "delivery": 0,
+      "discount": 0,
+      "total": 26.8
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg1w1cby",
+    "createdAt": "2025-09-27T06:26:44.014Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38114",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_hollandaise",
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "s_chicken-nuggets",
+        "name": "Chicken Nuggets",
+        "qty": 1,
+        "price": 5,
+        "size": "6 Stück",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 26.8,
+      "delivery": 0,
+      "discount": 0,
+      "total": 26.8
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg1w9viz",
+    "createdAt": "2025-09-27T06:33:22.139Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "campaniadipizza260@gmail.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Saldersche str.",
+      "zip": "31224",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_hollandaise",
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "s_chicken-nuggets",
+        "name": "Chicken Nuggets",
+        "qty": 1,
+        "price": 5,
+        "size": "6 Stück",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 26.8,
+      "delivery": 0,
+      "discount": 0,
+      "total": 26.8
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg1x7dof",
+    "createdAt": "2025-09-27T06:59:25.311Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Saldersche str.",
+      "zip": "38100",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "id": "p_hollandaise",
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "p_campania",
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": [],
+        "notes": ""
+      },
+      {
+        "id": "s_chicken-nuggets",
+        "name": "Chicken Nuggets",
+        "qty": 1,
+        "price": 5,
+        "size": "6 Stück",
+        "extras": [],
+        "notes": ""
+      }
+    ],
+    "totals": {
+      "subtotal": 26.8,
+      "delivery": 0,
+      "discount": 0,
+      "total": 26.8
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg20xk15",
+    "createdAt": "2025-09-27T08:43:45.449Z",
+    "mode": "pickup",
+    "customer": {
+      "email": "ekrema1999@gmail.com",
+      "phone": ""
+    },
+    "address": {},
+    "note": "",
+    "items": [
+      {
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": []
+      },
+      {
+        "name": "Gorgonzola e Noci",
+        "qty": 1,
+        "price": 12.5,
+        "size": "26 cm",
+        "extras": []
+      }
+    ],
+    "totals": {
+      "subtotal": 23.4,
+      "delivery_fee": 0,
+      "total": 23.4,
+      "currency": "EUR",
+      "zip_rule": null
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg21lmgc",
+    "createdAt": "2025-09-27T09:02:28.332Z",
+    "mode": "pickup",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {},
+    "note": "",
+    "items": [
+      {
+        "name": "Campania",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": []
+      }
+    ],
+    "totals": {
+      "subtotal": 10.9,
+      "delivery_fee": 0,
+      "total": 10.9,
+      "currency": "EUR",
+      "zip_rule": null
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg21n9bm",
+    "createdAt": "2025-09-27T09:03:44.626Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "owais.ahmad.najem@gmail.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38100",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "name": "Hollandaise",
+        "qty": 1,
+        "price": 10.9,
+        "size": "26 cm",
+        "extras": []
+      },
+      {
+        "name": "Sucuk",
+        "qty": 1,
+        "price": 10.5,
+        "size": "26 cm",
+        "extras": []
+      }
+    ],
+    "totals": {
+      "subtotal": 21.4,
+      "delivery_fee": 0,
+      "total": 21.4,
+      "currency": "EUR",
+      "zip_rule": {
+        "zip": "38100",
+        "mbw": 12,
+        "fee": 2.5,
+        "free_from": 20
+      }
+    },
+    "status": "new"
+  },
+  {
+    "id": "ord_mg224deo",
+    "createdAt": "2025-09-27T09:17:03.072Z",
+    "mode": "delivery",
+    "customer": {
+      "email": "vawar1999@gmial.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38100",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "name": "Marinara",
+        "qty": 1,
+        "price": 10.9,
+        "size": "30 cm",
+        "extras": [
+          {
+            "id": "ex_brokkoli",
+            "name": "Brokkoli",
+            "price": 1
+          }
+        ]
+      },
+      {
+        "name": "Quattro Formaggi",
+        "qty": 1,
+        "price": 9.9,
+        "size": "26 cm",
+        "extras": []
+      },
+      {
+        "name": "Burrata",
+        "qty": 1,
+        "price": 12.9,
+        "size": "26 cm",
+        "extras": []
+      }
+    ],
+    "totals": {
+      "subtotal": 33.7,
+      "delivery_fee": 0,
+      "total": 33.7,
+      "currency": "EUR",
+      "zip_rule": {
+        "zip": "38100",
+        "mbw": 12,
+        "fee": 2.5,
+        "free_from": 20
+      }
+    },
+    "status": "new"
+  },
+  {
+    "id": "o_u5b8xh6m",
+    "createdAt": "2025-09-28T06:14:31.106Z",
+    "mode": "delivery",
+    "customer": {
+      "name": "",
+      "email": "owais.ahmad.najem@gmail.com",
+      "phone": ""
+    },
+    "address": {
+      "street": "Hamburger str. 260",
+      "zip": "38100",
+      "city": "Braunschweig",
+      "info": ""
+    },
+    "note": "",
+    "items": [
+      {
+        "name": "Gorgonzola e Noci",
+        "qty": 1,
+        "price": 12.5,
+        "size": "26 cm",
+        "extras": []
+      },
+      {
+        "name": "Pasta Béchamel",
+        "qty": 1,
+        "price": 9,
+        "size": "Standard",
+        "extras": []
+      }
+    ],
+    "totals": {
+      "subtotal": 21.5,
+      "delivery_fee": 0,
+      "total": 21.5,
+      "currency": "EUR",
+      "zip_rule": {
+        "zip": "38100",
+        "mbw": 12,
+        "fee": 2.5,
+        "free_from": 20
+      }
+    },
+    "status": "new"
+  }
+]

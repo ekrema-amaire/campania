@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Campania · Admin</title>
+  <style>
+    body{font-family:system-ui,sans-serif;margin:20px}
+    header{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+    input,button,select{padding:6px 10px}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{border-bottom:1px solid #eee;text-align:left;padding:8px;vertical-align:top}
+    .muted{color:#666;font-size:13px;margin-top:4px}
+    .badge{padding:2px 8px;border-radius:999px;background:#eee;font-size:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1 style="margin:0;">Bestellungen</h1>
+    <input id="token" placeholder="Admin Token" />
+    <button id="load">Laden</button>
+    <button id="testBeep">🔊 Testton</button>
+  </header>
+
+  <div id="msg" class="muted">Bereit.</div>
+
+  <table aria-live="polite">
+    <thead>
+      <tr>
+        <th>Zeit</th><th>Nr.</th><th>Kunde</th><th>Artikel</th><th>Summe</th><th>Status</th><th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <!-- Externes Script, kein Inline-JS -->
+  <script src="/admin.js" defer></script>
+</body>
+</html>
